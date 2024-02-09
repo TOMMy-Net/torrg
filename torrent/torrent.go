@@ -2,7 +2,7 @@ package torrent
 
 import (
 	"os"
-
+  "bytes"
 	bencode "github.com/jackpal/bencode-go"
 )
 type bencodeInfo struct {
@@ -25,6 +25,7 @@ type TorrentFile struct {
 	Length      int
 	Name        string
 }
+
 func Open(path string)  bencodeFile{
 	file,err := os.Open(path)
 	
@@ -38,9 +39,20 @@ func Open(path string)  bencodeFile{
 	if err != nil {
 		os.Exit(1)
 	}
-	return BFile
+	return toTorrentFile(BFile)
 }
 
+func (t bencodeInfo) hashInfo() ([20]byte, error){
+  var buf bytes.Buffer
+  
+}
+
+func torrentFile(BFile bencodeFile) TorrentFile {
+  return TorrentFile{
+    Announce: BFile.Announce,  
+    
+  }
+}
 
 func DownloadFile()  {
 	
