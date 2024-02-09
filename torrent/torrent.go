@@ -3,6 +3,7 @@ package torrent
 import (
 	"os"
   "bytes"
+  "crypto/sha1"
 	bencode "github.com/jackpal/bencode-go"
 )
 type bencodeInfo struct {
@@ -44,7 +45,11 @@ func Open(path string)  bencodeFile{
 
 func (t bencodeInfo) hashInfo() ([20]byte, error){
   var buf bytes.Buffer
-  
+  err := bencode.Marshal(t, &buf)
+  if err != nil {
+    return [20]byte{}, err
+  }
+  var h = sha1.Sum()
 }
 
 func torrentFile(BFile bencodeFile) TorrentFile {
